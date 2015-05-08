@@ -10,15 +10,19 @@ hpc <- subset(hpc, Date == "1/2/2007" | Date == "2/2/2007")
 hpc$Date = as.Date(hpc$Date, "%d/%m/%Y")
 hpc$Time = strptime(paste(hpc$Date, hpc$Time), format = "%Y-%m-%d %H:%M:%S")
 
-## Plot 3
+## Plot 4
+par(mfrow = c(2,2), mar=c(5,5,2,2), oma=c(1,1,1,1))
+with(hpc,  plot(Time, Global_active_power, type="l", xlab = "", ylab = "Global Active Power"))
+with(hpc,  plot(Time, Voltage, type="l", xlab = "Datetime", ylab = "Voltage"))
 with(hpc, {plot(Time, Sub_metering_1, type = "n", xlab = "", ylab = "Energy sub metering")
           lines(Time, Sub_metering_1, col = "black")
           lines(Time, Sub_metering_2, col = "red")
           lines(Time, Sub_metering_3, col = "blue")})
-legend ("topright", lty = 1, lwd = 2, col = c("black","red","blue"),
-        legend = c("Sub_metering_1","Sub_metering_2","Sub_metering_3"))
+          legend ("topright", lwd = 2, bty = "n", col = c("black","red","blue"), cex = 0.5, lty = c(1,1),
+                  legend = c("Sub_metering_1","Sub_metering_2","Sub_metering_3"))
+with(hpc,  plot(Time, Global_reactive_power, type="l", xlab = "Datetime"))
 
 ## Write plot to png file
 setwd("./Documents/ExData_Plotting1/")
-dev.copy(png, file = "plot3.png", width = 480, height = 480)
+dev.copy(png, file = "plot4.png", width = 480, height = 480)
 dev.off()
